@@ -73,19 +73,35 @@
       (when (string-match regexp funcinfo)
         (match-string-no-properties 1 funcinfo)))))
 
+(defun go-eldoc--begining-of-funcall-p ()
+  (let ((curpoint (point)))
+    (save-excursion
+      (skip-chars-backward "a-zA-Z0-9_ ")
+      (string-match "[a-zA-Z0-9_]+\\s-*("
+                    (buffer-substring-no-properties
+                     (point) (1+ curpoint))))))
+
+(defun go-eldoc--goto-beginning-of-funcall ()
+  (loop with old-point = (point)
+        initially (go-goto-opening-parenthesis)
+        while (and (not (bobp))
+                   (not (= old-point (point)))
+                   (not (go-eldoc--begining-of-funcall-p)))
+        do
+        (go-goto-opening-parenthesis)
+        finally return (go-eldoc--begining-of-funcall-p)))
+
 (defun go-eldoc--get-funcinfo ()
   (let ((curpoint (point)))
     (save-excursion
       (when (go-in-string-or-comment-p)
         (go-goto-beginning-of-string-or-comment))
-      (and (re-search-backward "\\([a-zA-Z0-9_]+\\)\\s-*(" nil t)
-           (goto-char (match-end 0)))
-      (when (char-equal (string-to-char "(") (preceding-char))
-        (backward-char)
+      (when (go-eldoc--goto-beginning-of-funcall)
         (when (go-eldoc--inside-funcall-p (1- (point)) curpoint)
           (let ((matched (go-eldoc--match-candidates
                           (ac-go-invoke-autocomplete) (thing-at-point 'symbol))))
-            (when (string-match "\\`\\(.+?\\),,\\(.+\\)$" matched)
+            (when (and matched
+                       (string-match "\\`\\(.+?\\),,\\(.+\\)$" matched))
               (list :name (match-string-no-properties 1 matched)
                     :signature (match-string-no-properties 2 matched)
                     :index (go-eldoc--current-arg-index curpoint)))))))))
