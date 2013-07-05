@@ -5,7 +5,7 @@
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-go-eldoc
 ;; Version: 0.01
-;; Package-Requires: ((go-mode) (go-autocomplete))
+;; Package-Requires: ((go-mode "0") (go-autocomplete "0"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
