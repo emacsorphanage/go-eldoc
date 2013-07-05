@@ -143,9 +143,10 @@
   (let ((funcname (plist-get funcinfo :name))
         (signature (go-eldoc--analyze-signature (plist-get funcinfo :signature)))
         (index (plist-get funcinfo :index)))
-    (format "%s: %s"
-            (propertize funcname 'face 'font-lock-function-name-face)
-            (go-eldoc--highlight-argument signature index))))
+    (when signature
+      (format "%s: %s"
+              (propertize funcname 'face 'font-lock-function-name-face)
+              (go-eldoc--highlight-argument signature index)))))
 
 (defun go-eldoc--documentation-function ()
   (let ((funcinfo (go-eldoc--get-funcinfo)))
