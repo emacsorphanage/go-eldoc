@@ -152,19 +152,47 @@
             finally
             return (concat "(" (mapconcat 'identity args ", ") ") " ret-type)))))
 
+(defun go-eldoc--analyze-func-signature (signature)
+  (let (arg-start arg-end)
+    (when (search-forward "func(" nil t)
+      (setq arg-start (point))
+      (backward-char 1)
+      (forward-list)
+      (setq arg-end (1- (point)))
+      (skip-chars-forward "[[:space:]]")
+      (list :type 'function
+            :arg-type (buffer-substring-no-properties arg-start arg-end)
+            :ret-type (buffer-substring-no-properties (point) (point-max))))))
+
+(defun go-eldoc--analyze-type-signature (signature)
+  (when (search-forward "type " nil t)
+    (list :type 'type
+          :real-type (buffer-substring-no-properties (point) (point-max)))))
+
 (defun go-eldoc--analyze-signature (signature)
-  (when (string-match "\\`func(\\([^)]*\\))\\(?: \\(.+\\)\\)?$" signature)
-    (list :arg-type (match-string-no-properties 1 signature)
-          :ret-type (or (match-string-no-properties 2 signature) ""))))
+  (with-temp-buffer
+    (insert signature)
+    (goto-char (point-min))
+    (let ((word (thing-at-point 'word)))
+      (cond ((string= "func" word)
+             (go-eldoc--analyze-func-signature signature))
+            ((string= "type" word)
+             (go-eldoc--analyze-type-signature signature))))))
 
 (defun go-eldoc--format-signature (funcinfo)
-  (let ((funcname (plist-get funcinfo :name))
+  (let ((name (plist-get funcinfo :name))
         (signature (go-eldoc--analyze-signature (plist-get funcinfo :signature)))
         (index (plist-get funcinfo :index)))
     (when signature
-      (format "%s: %s"
-              (propertize funcname 'face 'font-lock-function-name-face)
-              (go-eldoc--highlight-argument signature index)))))
+      (case (plist-get signature :type)
+        (function
+         (format "%s: %s"
+                 (propertize name 'face 'font-lock-function-name-face)
+                 (go-eldoc--highlight-argument signature index)))
+        (type
+         (format "%s: %s"
+                 (propertize name 'face 'font-lock-type-face)
+                 (plist-get signature :real-type)))))))
 
 (defun go-eldoc--documentation-function ()
   (let ((funcinfo (go-eldoc--get-funcinfo)))
