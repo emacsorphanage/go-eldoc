@@ -63,15 +63,16 @@
           (right-paren (go-eldoc--count-string ")" from to)))
       (> left-paren right-paren))))
 
-(defun go-eldoc--validate-funcinfo (funcinfo)
-  (and funcinfo (stringp funcinfo)
-       (string-match ",,func" funcinfo)))
+(defun go-eldoc--inside-anon-function-p (from to)
+  (save-excursion
+    (goto-char from)
+    (re-search-forward "\\<func\\s-*(" to t)))
 
-(defun go-eldoc--match-candidates (funcinfo cur-symbol)
-  (when (go-eldoc--validate-funcinfo funcinfo)
-    (let ((regexp (format "^\\(%s,,.+\\)$" cur-symbol)))
-      (when (string-match regexp funcinfo)
-        (match-string-no-properties 1 funcinfo)))))
+(defun go-eldoc--match-candidates (candidates cur-symbol)
+  (when (and candidates (stringp candidates))
+    (let ((regexp (format "^\\(%s,,\\(?:func\\|type\\).+\\)$" cur-symbol)))
+      (when (string-match regexp candidates)
+        (match-string-no-properties 1 candidates)))))
 
 (defun go-eldoc--begining-of-funcall-p ()
   (let ((curpoint (point)))
@@ -97,7 +98,8 @@
       (when (go-in-string-or-comment-p)
         (go-goto-beginning-of-string-or-comment))
       (when (go-eldoc--goto-beginning-of-funcall)
-        (when (go-eldoc--inside-funcall-p (1- (point)) curpoint)
+        (when (and (go-eldoc--inside-funcall-p (1- (point)) curpoint)
+                   (not (go-eldoc--inside-anon-function-p (1- (point)) curpoint)))
           (let ((matched (go-eldoc--match-candidates
                           (ac-go-invoke-autocomplete) (thing-at-point 'symbol))))
             (when (and matched
@@ -109,10 +111,27 @@
 (defun go-eldoc--no-argument-p (arg-type)
   (string-match "\\`\\s-+\\'" arg-type))
 
+(defun go-eldoc--split-argument-type (arg-type)
+  (with-temp-buffer
+    (insert arg-type)
+    (goto-char (point-min))
+    (let ((name-types nil))
+      (while (re-search-forward "\\([a-zA-Z0-9_]+\\) \\([]{}a-zA-Z0-9_*.[]+\\)" nil t)
+        (let* ((name (match-string-no-properties 1))
+               (type (match-string-no-properties 2))
+               (name-type (concat name " " type))
+               (end (match-end 0)))
+          (when (string= type "func")
+            (forward-list)
+            (setq name-type (concat name-type
+                                    (buffer-substring-no-properties end (point)))))
+          (push name-type name-types)))
+      (reverse name-types))))
+
 (defun go-eldoc--highlight-argument (signature index)
   (let* ((arg-type (plist-get signature :arg-type))
          (ret-type (plist-get signature :ret-type))
-         (types (split-string arg-type ", ")))
+         (types (go-eldoc--split-argument-type arg-type)))
     (if (go-eldoc--no-argument-p arg-type)
         (concat "() " ret-type)
       (loop with highlight-done = nil
