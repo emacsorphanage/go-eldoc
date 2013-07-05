@@ -47,7 +47,8 @@
   (save-excursion
     (let ((count 1))
       (while (search-forward "," curpoint t)
-        (setq count (1+ count)))
+        (unless (go-in-string-or-comment-p)
+          (setq count (1+ count))))
       count)))
 
 (defun go-eldoc--count-string (str from to)
