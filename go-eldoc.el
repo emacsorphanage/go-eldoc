@@ -59,7 +59,6 @@
 
 (defun go-eldoc--inside-funcall-p (from to)
   (save-excursion
-    (goto-char (point))
     (let ((left-paren (go-eldoc--count-string "(" from to))
           (right-paren (go-eldoc--count-string ")" from to)))
       (> left-paren right-paren))))
