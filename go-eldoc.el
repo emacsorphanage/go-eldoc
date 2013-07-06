@@ -75,12 +75,8 @@
         (match-string-no-properties 1 candidates)))))
 
 (defun go-eldoc--begining-of-funcall-p ()
-  (let ((curpoint (point)))
-    (save-excursion
-      (skip-chars-backward "a-zA-Z0-9_ ")
-      (string-match "[a-zA-Z0-9_]+\\s-*("
-                    (buffer-substring-no-properties
-                     (point) (1+ curpoint))))))
+  (and (= (char-after) ?\()
+       (looking-back "[a-zA-Z0-9_]+\\s-*")))
 
 (defun go-eldoc--goto-beginning-of-funcall ()
   (loop with old-point = (point)
