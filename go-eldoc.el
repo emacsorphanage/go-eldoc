@@ -89,6 +89,7 @@
                    (not (= old-point (point)))
                    (not (go-eldoc--begining-of-funcall-p)))
         do
+        (setq old-point (point))
         (go-goto-opening-parenthesis)
         finally return (go-eldoc--begining-of-funcall-p)))
 
