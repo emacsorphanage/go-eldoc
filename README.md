@@ -9,6 +9,20 @@
 ![go-eldoc1](image/go-eldoc1.png)
 
 
+## Dependency
+
+* [gocode](https://github.com/nsf/gocode)
+* [go-mode](https://code.google.com/p/go/)
+* [go-autocomplete](https://github.com/nsf/gocode)
+
+You can install `go-mode` and `go-autocomplete` with package.el from MELPA.
+And you can install `gocode` by `go get` as below.
+
+```
+% go get -u github.com/nsf/gocode
+```
+
+
 ## Installation
 
 You can install `go-eldoc.el` from MELPA with package.el.
@@ -20,8 +34,7 @@ You can install `go-eldoc.el` from MELPA with package.el.
 (package-refresh-contents)
 ```
 
-and `M-x package-install go-eldoc`. `go-eldoc.el` depends on `go-mode` and `go-autocomplete`.
-Please install them firstly if you install without package.el.
+and `M-x package-install go-eldoc`.
 
 
 ## Setup
