@@ -1,4 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.02  2013/07/07 syohex
+  - Fix bug for not saving old-point(dominikh)
+  - improve regular expression searching(dominikh)
+
 Version 0.01  2013/07/06 syohex
   - init version
