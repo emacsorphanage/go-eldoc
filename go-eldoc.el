@@ -76,7 +76,7 @@
 
 (defun go-eldoc--begining-of-funcall-p ()
   (and (= (char-after) ?\()
-       (looking-back "[a-zA-Z0-9_]+\\s-*")))
+       (looking-back (concat go-identifier-regexp "\\s-*"))))
 
 (defun go-eldoc--goto-beginning-of-funcall ()
   (loop with old-point = (point)
@@ -113,7 +113,7 @@
     (insert arg-type)
     (goto-char (point-min))
     (let ((name-types nil))
-      (while (re-search-forward "\\([a-zA-Z0-9_]+\\) \\([]{}a-zA-Z0-9_*.[]+\\)" nil t)
+      (while (re-search-forward (concat "\\(" go-identifier-regexp "\\) \\([]{}[:word:][:multibyte:]*.[]+\\)") nil t)
         (let* ((name (match-string-no-properties 1))
                (type (match-string-no-properties 2))
                (name-type (concat name " " type))
