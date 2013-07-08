@@ -42,7 +42,7 @@ Call `go-eldoc-setup` function at `go-mode-hook`
 
 ```elisp
 (require 'go-eldoc) ;; Don't need to require, if you install by package.el
-(add-hook go-mode-hook 'go-eldoc-setup)
+(add-hook 'go-mode-hook 'go-eldoc-setup)
 ```
 
 ## customize
