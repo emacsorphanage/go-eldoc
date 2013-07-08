@@ -159,7 +159,7 @@
       (backward-char 1)
       (forward-list)
       (setq arg-end (1- (point)))
-      (skip-chars-forward "[[:space:]]")
+      (skip-chars-forward " \t")
       (list :type 'function
             :arg-type (buffer-substring-no-properties arg-start arg-end)
             :ret-type (buffer-substring-no-properties (point) (point-max))))))
