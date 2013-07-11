@@ -43,18 +43,13 @@
   :group 'go
   :prefix "go-eldoc-")
 
-(defun go-eldoc--not-inside-parenthesis-p (start)
-  (save-excursion
-    (go-goto-opening-parenthesis)
-    (= start (point))))
-
 (defun go-eldoc--current-arg-index (curpoint)
   (save-excursion
     (let ((count 1)
-          (start (point)))
+          (start-level (go-paren-level)))
       (while (search-forward "," curpoint t)
         (when (and (not (go-in-string-or-comment-p))
-                   (go-eldoc--not-inside-parenthesis-p start))
+                   (= start-level (1- (go-paren-level))))
           (incf count)))
       count)))
 
