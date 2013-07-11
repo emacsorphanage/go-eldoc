@@ -72,8 +72,12 @@
 
 (defun go-eldoc--inside-anon-function-p (from to)
   (save-excursion
-    (goto-char from)
-    (re-search-forward "\\<func\\s-*(" to t)))
+    (goto-char to)
+    (go-goto-opening-parenthesis)
+    (when (char-equal (char-after) ?\{)
+      (let ((func-start (point)))
+        (goto-char from)
+        (re-search-forward "\\<func\\s-*(" func-start t)))))
 
 (defun go-eldoc--match-candidates (candidates cur-symbol)
   (when (and candidates (stringp candidates))
