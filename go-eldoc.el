@@ -121,15 +121,20 @@
                     :signature (match-string-no-properties 2 matched)
                     :index (go-eldoc--current-arg-index curpoint)))))))))
 
-(defun go-eldoc--no-argument-p (arg-type)
+(defsubst go-eldoc--no-argument-p (arg-type)
   (string-match "\\`\\s-+\\'" arg-type))
+
+(defconst go-eldoc--argument-type-regexp
+  (concat "\\(" go-identifier-regexp "\\)"                 ;; argument name
+          "\\(?: \\([]{}[:word:][:multibyte:]*.[]+\\)\\)?" ;; argument type
+          ))
 
 (defun go-eldoc--split-argument-type (arg-type)
   (with-temp-buffer
     (insert arg-type)
     (goto-char (point-min))
     (let ((name-types nil))
-      (while (re-search-forward (concat "\\(" go-identifier-regexp "\\)\\(?: \\([]{}[:word:][:multibyte:]*.[]+\\)\\)?") nil t)
+      (while (re-search-forward go-eldoc--argument-type-regexp nil t)
         (let* ((name (match-string-no-properties 1))
                (type (match-string-no-properties 2))
                (name-type (if type
