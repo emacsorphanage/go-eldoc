@@ -123,6 +123,11 @@
                (end (match-end 0)))
           (when (string= type "func")
             (forward-list)
+            (cond ((looking-at (concat "\\s-*" go-identifier-regexp))
+                   (goto-char (match-end 0)))
+                  ((looking-at "\\s-*(")
+                   (skip-chars-forward " \t")
+                   (forward-list)))
             (setq name-type (concat name-type
                                     (buffer-substring-no-properties end (point)))))
           (push name-type name-types)))
