@@ -91,15 +91,18 @@
 
 (defun go-eldoc--goto-beginning-of-funcall ()
   (loop with old-point = (point)
+        with retval = nil
         initially (go-goto-opening-parenthesis)
         while (and (not (bobp))
                    (not (= old-point (point)))
-                   (not (go-eldoc--begining-of-funcall-p)))
+                   (progn
+                     (setq retval (go-eldoc--begining-of-funcall-p))
+                     (not retval)))
         do
         (progn
           (setq old-point (point))
           (go-goto-opening-parenthesis))
-        finally return (go-eldoc--begining-of-funcall-p)))
+        finally return retval))
 
 (defun go-eldoc--get-funcinfo ()
   (let ((curpoint (point)))
