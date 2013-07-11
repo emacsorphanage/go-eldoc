@@ -1,5 +1,10 @@
 Revision history for go-eldoc.el
 
+Version 0.04  2013/07/11 syohex
+  - Fix case that return type is slice
+  - Improve for anonymous function
+  - Improve for highlighting current argument index
+
 Version 0.03  2013/07/08 syohex
   - Fix case that return type is slice
 
