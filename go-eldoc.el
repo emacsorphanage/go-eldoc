@@ -87,7 +87,8 @@
 
 (defun go-eldoc--begining-of-funcall-p ()
   (and (= (char-after) ?\()
-       (looking-back (concat go-identifier-regexp "\\s-*"))))
+       (looking-back (concat go-identifier-regexp "\\s-*"))
+       (not (string= "func" (thing-at-point 'word)))))
 
 (defun go-eldoc--goto-beginning-of-funcall ()
   (loop with old-point = (point)
