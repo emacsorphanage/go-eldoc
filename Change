@@ -1,5 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.06  2013/08/06 syohex
+  - Support builtin functions('append', 'copy' etc)
+
 Version 0.05  2013/07/12 syohex
   - Improve calculating current index of arguments(Thanks dominikh)
 
