@@ -71,6 +71,7 @@
   (save-excursion
     (goto-char from)
     (loop while (search-forward str to t)
+          unless (go-in-string-or-comment-p)
           counting 1)))
 
 (defun go-eldoc--inside-funcall-p (from to)
