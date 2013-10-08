@@ -1,7 +1,7 @@
 # go-eldoc.el
 
 ## Introduction
-`go-eldoc.el` provides eldoc for go language.
+`go-eldoc.el` provides eldoc for Go language.
 
 
 ## Screenshot
@@ -15,7 +15,7 @@
 * [go-mode](https://code.google.com/p/go/)
 * [go-autocomplete](https://github.com/nsf/gocode)
 
-You can install `go-mode` and `go-autocomplete` with package.el from MELPA.
+You can install `go-mode` and `go-autocomplete` with package.el from [MELPA](http://melpa.milkbox.net/).
 And you can install `gocode` by `go get` as below.
 
 ```
@@ -25,7 +25,7 @@ And you can install `gocode` by `go get` as below.
 
 ## Installation
 
-You can install `go-eldoc.el` from MELPA with package.el.
+You can install `go-eldoc.el` from [MELPA](http://melpa.milkbox.net/) with package.el.
 
 ```
 (require 'package)
@@ -34,7 +34,7 @@ You can install `go-eldoc.el` from MELPA with package.el.
 (package-refresh-contents)
 ```
 
-and `M-x package-install go-eldoc`.
+evaluate this code and <kbd>M-x package-install go-eldoc</kbd>.
 
 
 ## Setup
@@ -46,11 +46,11 @@ Call `go-eldoc-setup` function at `go-mode-hook`
 ```
 
 ## customize
-You can change current argument index face by setting
-`eldoc-highlight-function-argument` face as below.
+You can change face of current argument positon by `eldoc-highlight-function-argument`
+like this.
 
 ```elisp
 (set-face-attribute 'eldoc-highlight-function-argument nil
-                     :underline t :foreground "green"
-                     :weight 'bold)
+                    :underline t :foreground "green"
+                    :weight 'bold)
 ```
