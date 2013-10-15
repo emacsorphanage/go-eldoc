@@ -1,5 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.09  2013/10/16 syohex
+  - Fix case of channel slice
+
 Version 0.08  2013/10/15 syohex
   - Fix case of channel type display
 
