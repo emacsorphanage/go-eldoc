@@ -1,5 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.08  2013/10/15 syohex
+  - Fix case of channel type display
+
 Version 0.07  2013/08/13 syohex
   - Fix case of `fmt.Fprint(os.Stdout, ",})", <here>`
 
