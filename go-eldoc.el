@@ -147,9 +147,18 @@
   (string-match "\\`\\s-+\\'" arg-type))
 
 (defconst go-eldoc--argument-type-regexp
-  (concat "\\(" go-identifier-regexp "\\)"                 ;; argument name
-          "\\(?: \\([]{}[:word:][:multibyte:]*.[]+\\)\\)?" ;; argument type
-          ))
+  (concat
+   "\\(" go-identifier-regexp "\\)" ;; $1 argname
+   (format "\\(?: %s%s\\)?"
+           "\\(\\(?:<-\\)?chan\\(?:<-\\)? \\)?" ;; $2 channel
+           "\\(?:\\([]{}[:word:][:multibyte:]*.[]+\\)\\)?") ;; $3 argtype
+   ))
+
+(defun go-eldoc--extract-type-name (chan sym)
+  (when sym
+    (if (or (not chan) (string= chan ""))
+        sym
+      (concat chan sym))))
 
 (defun go-eldoc--split-argument-type (arg-type)
   (with-temp-buffer
@@ -158,7 +167,9 @@
     (let ((name-types nil))
       (while (re-search-forward go-eldoc--argument-type-regexp nil t)
         (let* ((name (match-string-no-properties 1))
-               (type (match-string-no-properties 2))
+               (type (go-eldoc--extract-type-name
+                      (match-string-no-properties 2)
+                      (match-string-no-properties 3)))
                (name-type (if type
                               (concat name " " type)
                             name))
