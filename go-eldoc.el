@@ -150,7 +150,7 @@
   (concat
    "\\(" go-identifier-regexp "\\)" ;; $1 argname
    (format "\\(?: %s%s\\)?"
-           "\\(\\(?:<-\\)?chan\\(?:<-\\)? \\)?" ;; $2 channel
+           "\\(\\(?:\\[\\]\\)?\\(?:<-\\)?chan\\(?:<-\\)? \\)?" ;; $2 channel
            "\\(?:\\([]{}[:word:][:multibyte:]*.[]+\\)\\)?") ;; $3 argtype
    ))
 
