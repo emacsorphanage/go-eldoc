@@ -5,7 +5,7 @@
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-go-eldoc
 ;; Version: 0.09
-;; Package-Requires: ((go-mode "0") (go-autocomplete "0"))
+;; Package-Requires: ((go-mode "0"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -35,7 +35,6 @@
 
 (require 'eldoc)
 (require 'go-mode)
-(require 'go-autocomplete)
 (require 'thingatpt)
 
 (defgroup go-eldoc nil
@@ -126,6 +125,23 @@
           (go-goto-opening-parenthesis))
         finally return retval))
 
+;; Same as 'ac-go-invoke-autocomplete'
+(defun go-eldoc--invoke-autocomplete ()
+  (let ((temp-buffer (generate-new-buffer "*go-eldoc*")))
+    (prog2
+	(call-process-region (point-min)
+			     (point-max)
+			     "gocode"
+			     nil
+			     temp-buffer
+			     nil
+			     "-f=emacs"
+			     "autocomplete"
+			     (or (buffer-file-name) "")
+			     (concat "c" (int-to-string (- (point) 1))))
+	(with-current-buffer temp-buffer (buffer-string))
+      (kill-buffer temp-buffer))))
+
 (defun go-eldoc--get-funcinfo ()
   (let ((curpoint (point)))
     (save-excursion
@@ -135,7 +151,7 @@
         (when (and (go-eldoc--inside-funcall-p (1- (point)) curpoint)
                    (not (go-eldoc--inside-anon-function-p (1- (point)) curpoint)))
           (let ((matched (go-eldoc--match-candidates
-                          (ac-go-invoke-autocomplete) (thing-at-point 'symbol)
+                          (go-eldoc--invoke-autocomplete) (thing-at-point 'symbol)
                           curpoint)))
             (when (and matched
                        (string-match "\\`\\(.+?\\),,\\(.+\\)$" matched))
