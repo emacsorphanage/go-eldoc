@@ -13,9 +13,8 @@
 
 * [gocode](https://github.com/nsf/gocode)
 * [go-mode](https://code.google.com/p/go/)
-* [go-autocomplete](https://github.com/nsf/gocode)
 
-You can install `go-mode` and `go-autocomplete` with package.el from [MELPA](http://melpa.milkbox.net/).
+You can install `go-mode` with package.el from [MELPA](http://melpa.milkbox.net/).
 And you can install `gocode` by `go get` as below.
 
 ```
