@@ -178,6 +178,7 @@
 
 (defun go-eldoc--split-argument-type (arg-type)
   (with-temp-buffer
+    (set-syntax-table go-mode-syntax-table)
     (insert arg-type)
     (goto-char (point-min))
     (let ((name-types nil))
@@ -245,6 +246,7 @@
 
 (defun go-eldoc--analyze-signature (signature)
   (with-temp-buffer
+    (set-syntax-table go-mode-syntax-table)
     (insert signature)
     (goto-char (point-min))
     (let ((word (thing-at-point 'word)))
