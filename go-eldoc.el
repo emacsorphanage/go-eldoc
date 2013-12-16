@@ -164,7 +164,7 @@
 
 (defconst go-eldoc--argument-type-regexp
   (concat
-   "\\(" go-identifier-regexp "\\)" ;; $1 argname
+   "\\([]{}[:word:][:multibyte:]*.[]+\\)" ;; $1 argname
    (format "\\(?: %s%s\\)?"
            "\\(\\(?:\\[\\]\\)?\\(?:<-\\)?chan\\(?:<-\\)? \\)?" ;; $2 channel
            "\\(?:\\([]{}[:word:][:multibyte:]*.[]+\\)\\)?") ;; $3 argtype
