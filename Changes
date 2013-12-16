@@ -1,5 +1,9 @@
 Revision history for go-eldoc.el
 
+Version 0.12 2013/12/16 syohex
+  - Fix type only argument case(#10)
+    Reported by Bad-ptr
+
 Version 0.11 2013/12/15 syohex
   - Fix invalid argument analyze(#8)
     Reported by Bad-ptr
