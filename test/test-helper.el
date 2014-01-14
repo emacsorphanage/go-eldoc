@@ -34,12 +34,14 @@
      ,@body))
 
 (defun forward-cursor-on (pattern)
-  (re-search-forward pattern)
-  (goto-char (match-beginning 0)))
+  (let ((case-fold-search nil))
+    (re-search-forward pattern)
+    (goto-char (match-beginning 0))))
 
 (defun backward-cursor-on (pattern)
-  (re-search-backward pattern)
-  (goto-char (match-beginning 0)))
+  (let ((case-fold-search nil))
+    (re-search-backward pattern)
+    (goto-char (match-beginning 0))))
 
 (defun face-at-cursor-p (face)
   (eq (face-at-point) face))
