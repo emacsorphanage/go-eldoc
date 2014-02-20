@@ -279,7 +279,7 @@
   (interactive)
   (set (make-local-variable 'eldoc-documentation-function)
        'go-eldoc--documentation-function)
-  (turn-on-eldoc-mode))
+  (eldoc-mode +1))
 
 (provide 'go-eldoc)
 
