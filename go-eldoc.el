@@ -1,10 +1,10 @@
 ;;; go-eldoc.el --- eldoc for go-mode
 
-;; Copyright (C) 2013 by Syohei YOSHIDA
+;; Copyright (C) 2014 by Syohei YOSHIDA
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-go-eldoc
-;; Version: 0.12
+;; Version: 0.13
 ;; Package-Requires: ((go-mode "0") (cl-lib "0.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
