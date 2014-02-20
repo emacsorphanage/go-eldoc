@@ -21,8 +21,7 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'cl))
+(require 'cl-lib)
 
 (require 'ert)
 (require 'go-eldoc)

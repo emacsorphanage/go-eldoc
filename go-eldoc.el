@@ -5,7 +5,7 @@
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-go-eldoc
 ;; Version: 0.12
-;; Package-Requires: ((go-mode "0"))
+;; Package-Requires: ((go-mode "0") (cl-lib "0.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -30,8 +30,7 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'cl))
+(require 'cl-lib)
 
 (require 'eldoc)
 (require 'go-mode)
@@ -63,15 +62,15 @@
       (while (search-forward "," curpoint t)
         (when (and (not (go-in-string-or-comment-p))
                    (= start-level (1- (go-paren-level))))
-          (incf count)))
+          (cl-incf count)))
       count)))
 
 (defun go-eldoc--count-string (str from to)
   (save-excursion
     (goto-char from)
-    (loop while (search-forward str to t)
-          unless (go-in-string-or-comment-p)
-          counting 1)))
+    (cl-loop while (search-forward str to t)
+             unless (go-in-string-or-comment-p)
+             counting 1)))
 
 (defun go-eldoc--inside-funcall-p (from to)
   (save-excursion
@@ -111,19 +110,19 @@
        (not (string= "func" (thing-at-point 'word)))))
 
 (defun go-eldoc--goto-beginning-of-funcall ()
-  (loop with old-point = (point)
-        with retval = nil
-        initially (go-goto-opening-parenthesis)
-        while (and (not (bobp))
-                   (not (= old-point (point)))
-                   (progn
-                     (setq retval (go-eldoc--begining-of-funcall-p))
-                     (not retval)))
-        do
-        (progn
-          (setq old-point (point))
-          (go-goto-opening-parenthesis))
-        finally return retval))
+  (cl-loop with old-point = (point)
+           with retval = nil
+           initially (go-goto-opening-parenthesis)
+           while (and (not (bobp))
+                      (not (= old-point (point)))
+                      (progn
+                        (setq retval (go-eldoc--begining-of-funcall-p))
+                        (not retval)))
+           do
+           (progn
+             (setq old-point (point))
+             (go-goto-opening-parenthesis))
+           finally return retval))
 
 ;; Same as 'ac-go-invoke-autocomplete'
 (defun go-eldoc--invoke-autocomplete ()
@@ -209,23 +208,23 @@
          (types (go-eldoc--split-argument-type arg-type)))
     (if (go-eldoc--no-argument-p arg-type)
         (concat "() " ret-type)
-      (loop with highlight-done = nil
-            with arg-len = (length types)
-            for i from 0 to arg-len
-            for type in types
-            if (and (not highlight-done)
-                    (or (= i (1- index))
-                        (and (= i (1- arg-len))
-                             (string-match "\\.\\{3\\}" type))))
-            collect
-            (progn
-              (setq highlight-done t)
-              (propertize type 'face 'eldoc-highlight-function-argument)) into args
+      (cl-loop with highlight-done = nil
+               with arg-len = (length types)
+               for i from 0 to arg-len
+               for type in types
+               if (and (not highlight-done)
+                       (or (= i (1- index))
+                           (and (= i (1- arg-len))
+                                (string-match "\\.\\{3\\}" type))))
+               collect
+               (progn
+                 (setq highlight-done t)
+                 (propertize type 'face 'eldoc-highlight-function-argument)) into args
 
-            else
-            collect type into args
-            finally
-            return (concat "(" (mapconcat 'identity args ", ") ") " ret-type)))))
+               else
+               collect type into args
+               finally
+               return (concat "(" (mapconcat 'identity args ", ") ") " ret-type)))))
 
 (defun go-eldoc--analyze-func-signature (signature)
   (let (arg-start arg-end)
@@ -260,7 +259,7 @@
         (signature (go-eldoc--analyze-signature (plist-get funcinfo :signature)))
         (index (plist-get funcinfo :index)))
     (when signature
-      (case (plist-get signature :type)
+      (cl-case (plist-get signature :type)
         (function
          (format "%s: %s"
                  (propertize name 'face 'font-lock-function-name-face)
