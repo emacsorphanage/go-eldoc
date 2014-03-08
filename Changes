@@ -1,5 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.14 2014/03/08 syohex
+  - Enable lexical-binding
+
 Version 0.13 2014/02/21 syohex
   - Switch to cl-lib
   - Fix byte compile warning
