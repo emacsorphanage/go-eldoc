@@ -1,4 +1,4 @@
-;;; go-eldoc.el --- eldoc for go-mode
+;;; go-eldoc.el --- eldoc for go-mode -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014 by Syohei YOSHIDA
 
@@ -226,7 +226,7 @@
                finally
                return (concat "(" (mapconcat 'identity args ", ") ") " ret-type)))))
 
-(defun go-eldoc--analyze-func-signature (signature)
+(defun go-eldoc--analyze-func-signature ()
   (let (arg-start arg-end)
     (when (search-forward "func(" nil t)
       (setq arg-start (point))
@@ -238,7 +238,7 @@
             :arg-type (buffer-substring-no-properties arg-start arg-end)
             :ret-type (buffer-substring-no-properties (point) (point-max))))))
 
-(defun go-eldoc--analyze-type-signature (signature)
+(defun go-eldoc--analyze-type-signature ()
   (when (search-forward "type " nil t)
     (list :type 'type
           :real-type (buffer-substring-no-properties (point) (point-max)))))
@@ -250,9 +250,9 @@
     (goto-char (point-min))
     (let ((word (thing-at-point 'word)))
       (cond ((string= "func" word)
-             (go-eldoc--analyze-func-signature signature))
+             (go-eldoc--analyze-func-signature))
             ((string= "type" word)
-             (go-eldoc--analyze-type-signature signature))))))
+             (go-eldoc--analyze-type-signature))))))
 
 (defun go-eldoc--format-signature (funcinfo)
   (let ((name (plist-get funcinfo :name))
