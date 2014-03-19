@@ -1,5 +1,6 @@
 (source gnu)
 (source melpa)
+(source marmalade)
 
 (package "go-eldoc" "0" "eldoc for Go Language")
 
