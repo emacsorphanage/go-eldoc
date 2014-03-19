@@ -9,6 +9,9 @@ env:
     - EMACS=emacs-snapshot
   global:
     - CASK=$HOME/.cask/bin/cask
+matrix:
+  allow_failures:
+    - env: EMACS=emacs-snapshot
 before_install:
   - go get github.com/nsf/gocode
   - export PATH=$HOME/gopath/bin:$PATH
