@@ -1,4 +1,4 @@
-# go-eldoc.el
+# go-eldoc.el [![Build Status](https://travis-ci.org/syohex/emacs-go-eldoc.png)](https://travis-ci.org/syohex/emacs-go-eldoc)
 
 ## Introduction
 `go-eldoc.el` provides eldoc for Go language.
