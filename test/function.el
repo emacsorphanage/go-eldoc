@@ -147,6 +147,23 @@ func foo(arg1, arg2 string) (ret1, ret2 int) {
           (expected "foo: (arg1, arg2 string) (ret1, ret2 int)"))
       (should (string= got expected)))))
 
+(ert-deftest arguments-in-multiple-lines ()
+  "Arguments in multiple lines"
+  (with-go-temp-buffer
+    "
+package main
+func foo(
+     arg1 int,
+     arg2 bool,
+     arg3 string
+) float {
+}
+"
+    (forward-cursor-on "arg2")
+    (let ((got (go-eldoc--documentation-function))
+          (expected "foo: (arg1 int, arg2 bool, arg3 string) float"))
+      (should (string= got expected)))))
+
 (ert-deftest channel-argument ()
   "Function has channel argument"
   (with-go-temp-buffer
