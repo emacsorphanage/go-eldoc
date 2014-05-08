@@ -130,7 +130,7 @@ func main() {
 "
     (forward-cursor-on "bar()")
     (let ((got (go-eldoc--documentation-function))
-          (expected "bar: func(a int) int"))
+          (expected "foo.bar: func(a int) int"))
       (should (string= got expected)))))
 
 ;;

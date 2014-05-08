@@ -154,9 +154,10 @@
                           curpoint)))
             (when (and matched
                        (string-match "\\`\\(.+?\\),,\\(.+\\)$" matched))
-              (list :name (match-string-no-properties 1 matched)
-                    :signature (match-string-no-properties 2 matched)
-                    :index (go-eldoc--current-arg-index curpoint)))))))))
+              (let ((funcname (match-string-no-properties 1 matched))
+                    (signature (match-string-no-properties 2 matched)))
+                (list :name funcname :signature signature
+                      :index (go-eldoc--current-arg-index curpoint))))))))))
 
 (defsubst go-eldoc--no-argument-p (arg-type)
   (string-match "\\`\\s-+\\'" arg-type))
@@ -269,10 +270,55 @@
                  (propertize name 'face 'font-lock-type-face)
                  (plist-get signature :real-type)))))))
 
+(defun go-eldoc--retrieve-type (typeinfo symbol)
+  (cond ((string-match (format "^%s,,var \\(.+\\)$" symbol) typeinfo)
+         (match-string 1 typeinfo))
+        ((string-match-p (format "\\`%s,,package\\s-*$" symbol) typeinfo)
+         "package")
+        ((string-match (format "^%s,,\\(func.+\\)$" symbol) typeinfo)
+         (match-string 1 typeinfo))
+        ((string-match (format "^%s,,\\(.+\\)$" symbol) typeinfo)
+         (match-string 1 typeinfo))))
+
+(defun go-eldoc--get-cursor-info (bounds)
+  (save-excursion
+    (goto-char (cdr bounds))
+    (go-eldoc--retrieve-type
+     (go-eldoc--invoke-autocomplete)
+     (buffer-substring-no-properties (car bounds) (cdr bounds)))))
+
+(defun go-eldoc--retrieve-concrete-name (bounds)
+  (save-excursion
+    (goto-char (car bounds))
+    (while (looking-back "\\.")
+      (backward-char 1)
+      (skip-chars-backward "[:word:][:multibyte:]\\[\\]"))
+    (buffer-substring-no-properties (point) (cdr bounds))))
+
+(defun go-eldoc--bounds-of-go-symbol ()
+  (save-excursion
+    (let (start)
+      (skip-chars-backward "[:word:][:multibyte:]")
+      (setq start (point))
+      (skip-chars-forward "[:word:][:multibyte:]")
+      (unless (= start (point))
+        (cons start (point))))))
+
+(defsubst go-eldoc--propertize-cursor-thing (bounds)
+  (propertize (go-eldoc--retrieve-concrete-name bounds)
+              'face 'font-lock-variable-name-face))
+
 (defun go-eldoc--documentation-function ()
   (let ((funcinfo (go-eldoc--get-funcinfo)))
-    (when funcinfo
-      (go-eldoc--format-signature funcinfo))))
+    (if funcinfo
+        (go-eldoc--format-signature funcinfo)
+      (let ((bounds (go-eldoc--bounds-of-go-symbol)))
+        (when bounds
+          (let ((curinfo (go-eldoc--get-cursor-info bounds)))
+            (when curinfo
+              (format "%s: %s"
+                      (go-eldoc--propertize-cursor-thing bounds)
+                      curinfo))))))))
 
 ;;;###autoload
 (defun go-eldoc-setup ()
