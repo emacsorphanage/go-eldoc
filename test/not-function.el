@@ -106,6 +106,41 @@ func main() {
           (expected "funcvar: func(a int, b int) int"))
       (should (string= got expected)))))
 
+(ert-deftest array-index ()
+  "Show array index variable"
+  (with-go-temp-buffer
+    "
+package main
+func main() {
+     var foo int = 2
+     bar := []int{0, 1, 2}
+     bar[foo]
+}
+"
+    (forward-cursor-on "foo\\]")
+    (let ((got (go-eldoc--documentation-function))
+          (expected "foo: int"))
+      (should (string= got expected)))))
+
+(ert-deftest array-element-property ()
+  "Show array elemet property"
+  (with-go-temp-buffer
+    "
+package main
+
+type Foo struct { bar int }
+
+func main() {
+     var foo [10]Foo
+     foo[9].bar
+}
+"
+    (forward-cursor-on "\\.bar")
+    (forward-char)
+    (let ((got (go-eldoc--documentation-function))
+          (expected "foo[9].bar: int"))
+      (should (string= got expected)))))
+
 ;;
 ;; Method
 ;;
