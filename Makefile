@@ -11,7 +11,7 @@ ELPA_DIR = \
 
 test: elpa
 	$(CASK) exec $(EMACS) -Q -batch $(LOADPATH) $(LOAD_HELPER) \
-		-l test/function.el \
+		-l test/function.el -l test/not-function.el \
 		-f ert-run-tests-batch-and-exit
 
 test-function:
