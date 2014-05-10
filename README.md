@@ -1,12 +1,20 @@
 # go-eldoc.el [![Build Status](https://travis-ci.org/syohex/emacs-go-eldoc.png)](https://travis-ci.org/syohex/emacs-go-eldoc)
 
 ## Introduction
-`go-eldoc.el` provides eldoc for Go language.
+
+`go-eldoc.el` provides eldoc for Go language. `go-eldoc.el` shows type information
+for variable, functions and current position of function.
 
 
 ## Screenshot
 
+### Argument of Function
+
 ![go-eldoc1](image/go-eldoc1.png)
+
+### Variable Type Information
+
+![go-eldoc2](image/go-eldoc2.png)
 
 
 ## Dependency
