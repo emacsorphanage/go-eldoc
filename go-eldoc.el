@@ -87,12 +87,25 @@
         (goto-char from)
         (re-search-forward "\\<func\\s-*(" func-start t)))))
 
+(defun go-eldoc--make-type ()
+  (save-excursion
+    (let ((cur (point)))
+      (when (re-search-forward "[,)]" (line-end-position) t)
+        (backward-char 1)
+        (skip-chars-backward "[:space:]")
+        (buffer-substring-no-properties (1+ cur) (point))))))
+
+(defun go-eldoc--make-signature (type index)
+  (when (or (not type) (string= type ""))
+    (setq type "Type"))
+  (if (= index 3)
+      (format "make,,func(%s, size IntegerType, capacity IntegerType) %s" type)
+    (format "make,,func(%s, size IntegerType) %s" type type)))
+
 (defun go-eldoc--search-builtin-functions (symbol curpoint)
   (if (string= symbol "make")
       (let ((index (go-eldoc--current-arg-index curpoint)))
-        (if (= index 3)
-            "make,,func(Type, size IntegerType, capacity IntegerType) Type"
-          "make,,func(Type, size IntegerType) Type"))
+        (go-eldoc--make-signature (go-eldoc--make-type) index))
     (assoc-default symbol go-eldoc--builtins)))
 
 (defun go-eldoc--match-candidates (candidates cur-symbol curpoint)
@@ -274,12 +287,12 @@
     (when (search-forward "func(" nil t)
       (setq arg-start (point))
       (backward-char 1)
-      (forward-list)
-      (setq arg-end (1- (point)))
-      (skip-chars-forward " \t")
-      (list :type 'function
-            :arg-type (buffer-substring-no-properties arg-start arg-end)
-            :ret-type (buffer-substring-no-properties (point) (point-max))))))
+      (when (ignore-errors (forward-list) t)
+        (setq arg-end (1- (point)))
+        (skip-chars-forward " \t")
+        (list :type 'function
+              :arg-type (buffer-substring-no-properties arg-start arg-end)
+              :ret-type (buffer-substring-no-properties (point) (point-max)))))))
 
 (defun go-eldoc--analyze-type-signature ()
   (when (search-forward "type " nil t)
