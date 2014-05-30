@@ -1,5 +1,9 @@
 Revision history for go-eldoc.el
 
+Version 0.16 2014/05/30 syohex
+  - Improve highlighting in left hand side expression
+  - Improve displaying 'make' signature
+
 Version 0.15 2014/05/09 syohex
   - Show type information for variable, package, method etc
 
