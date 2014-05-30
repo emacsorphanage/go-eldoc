@@ -244,9 +244,12 @@
           (push name-type name-types)))
       (reverse name-types))))
 
+(defsubst go-eldoc--has-spaces (str)
+  (string-match-p "[[:space:]]" str))
+
 (defun go-eldoc--wrap-parenthesis (str len rettype)
   ;; Don't wrap if return value is only one
-  (if (and (<= len 1) rettype)
+  (if (and rettype (<= len 1) (not (go-eldoc--has-spaces str)))
       str
     (concat "(" str ")")))
 
