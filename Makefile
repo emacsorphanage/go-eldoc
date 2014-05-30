@@ -15,7 +15,18 @@ test: elpa
 		-f ert-run-tests-batch-and-exit
 
 test-function:
-	$(EMACS) -Q -batch $(LOADPATH) $(LOAD_HELPER) -l test/function.el
+	$(CASK) exec $(EMACS) -Q -batch $(LOADPATH) $(LOAD_HELPER) \
+		-l test/function.el  \
+		-f ert-run-tests-batch-and-exit
+
+test-not-function:
+	$(CASK) exec $(EMACS) -Q -batch $(LOADPATH) $(LOAD_HELPER) \
+		-l test/not-function.el  \
+		-f ert-run-tests-batch-and-exit
+
+test-lhs:
+	$(CASK) exec $(EMACS) -Q -batch $(LOADPATH) $(LOAD_HELPER) \
+		-l test/lhs.el  \
 		-f ert-run-tests-batch-and-exit
 
 elpa: $(ELPA_DIR)
