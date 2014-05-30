@@ -99,7 +99,7 @@
   (when (or (not type) (string= type ""))
     (setq type "Type"))
   (if (= index 3)
-      (format "make,,func(%s, size IntegerType, capacity IntegerType) %s" type)
+      (format "make,,func(%s, size IntegerType, capacity IntegerType) %s" type type)
     (format "make,,func(%s, size IntegerType) %s" type type)))
 
 (defun go-eldoc--search-builtin-functions (symbol curpoint)
