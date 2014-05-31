@@ -8,13 +8,17 @@ for variable, functions and current position of function.
 
 ## Screenshot
 
-### Argument of Function
+### Argument Type of Function
 
 ![go-eldoc1](image/go-eldoc1.png)
 
 ### Variable Type Information
 
 ![go-eldoc2](image/go-eldoc2.png)
+
+### Return Value Type
+
+![go-eldoc3](image/go-eldoc3.png)
 
 
 ## Dependency
