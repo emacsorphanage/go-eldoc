@@ -106,4 +106,28 @@ func main () {
         (should-not (get-text-property 0 'face (substring got -19 -16)))
         (should-not (get-text-property 0 'face (substring got -14 -9)))))))
 
+(ert-deftest separated-by-semicolon ()
+  "assignment expression with semicolon"
+  (with-go-temp-buffer
+    "
+package main
+func foo(arg int) error {
+}
+
+func main () {
+        if err := foo(10); err != nil {
+        }
+}
+"
+    (goto-char (point-max))
+    (backward-cursor-on "if")
+    (forward-cursor-on "err")
+    (let ((got (go-eldoc--documentation-function))
+          (expected "foo: (arg int) error"))
+      (should (string= got expected))
+
+      (let ((highlighted-part (substring got -5)))
+        (should (eq (get-text-property 0 'face highlighted-part)
+                    'eldoc-highlight-function-argument))))))
+
 ;;; lhs.el end here
