@@ -128,6 +128,12 @@ func main () {
 
       (let ((highlighted-part (substring got -5)))
         (should (eq (get-text-property 0 'face highlighted-part)
-                    'eldoc-highlight-function-argument))))))
+                    'eldoc-highlight-function-argument))))
+
+    (forward-cursor-on "10")
+    (let* ((got (go-eldoc--documentation-function))
+           (highlighted-part (substring got 6 13)))
+      (should (eq (get-text-property 0 'face highlighted-part)
+                  'eldoc-highlight-function-argument)))))
 
 ;;; lhs.el end here
