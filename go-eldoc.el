@@ -171,12 +171,19 @@
       (when (looking-back ")\\s-*")
         (goto-char (match-beginning 0))))))
 
+(defun go-eldoc--lhs-p (curpoint)
+  (save-excursion
+    (let ((limit (line-end-position)))
+      (when (search-forward ";" limit t)
+        (setq limit (1- (point))))
+      (goto-char curpoint)
+      (re-search-forward ":?=" limit t))))
+
 (defun go-eldoc--assignment-p (curpoint)
-  (let ((line (buffer-substring-no-properties curpoint (line-end-position))))
-    (when (and (not (looking-at-p "\\s-+")) (string-match ":?=" line))
-      (let ((lhs (buffer-substring-no-properties (line-beginning-position) curpoint)))
-        (when (go-eldoc--goto-statement-end)
-          (- (go-eldoc--assignment-index lhs)))))))
+  (when (and (not (looking-at-p "\\s-+")) (go-eldoc--lhs-p curpoint))
+    (let ((lhs (buffer-substring-no-properties (line-beginning-position) curpoint)))
+      (when (go-eldoc--goto-statement-end)
+        (- (go-eldoc--assignment-index lhs))))))
 
 (defun go-eldoc--get-funcinfo ()
   (save-excursion
