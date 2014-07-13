@@ -1,10 +1,7 @@
 (source gnu)
 (source melpa)
-(source marmalade)
 
-(package "go-eldoc" "0" "eldoc for Go Language")
+(package-file "go-eldoc.el")
 
 (development
- (depends-on "ert")
- (depends-on "go-mode")
- (depends-on "cl-lib"))
+ (depends-on "ert"))
