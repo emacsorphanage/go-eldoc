@@ -81,11 +81,11 @@
 (defun go-eldoc--inside-anon-function-p (from to)
   (save-excursion
     (goto-char to)
-    (go-goto-opening-parenthesis)
-    (when (char-equal (char-after) ?\{)
-      (let ((func-start (point)))
-        (goto-char from)
-        (re-search-forward "\\<func\\s-*(" func-start t)))))
+    (when (go-eldoc--goto-opening-parenthesis)
+      (when (char-equal (char-after) ?\{)
+        (let ((func-start (point)))
+          (goto-char from)
+          (re-search-forward "\\<func\\s-*(" func-start t))))))
 
 (defun go-eldoc--make-type ()
   (save-excursion
@@ -122,19 +122,20 @@
        (looking-back (concat go-identifier-regexp "\\s-*"))
        (not (string= "func" (thing-at-point 'word)))))
 
+(defsubst go-eldoc--goto-opening-parenthesis ()
+  (ignore-errors (backward-up-list) t))
+
 (defun go-eldoc--goto-beginning-of-funcall ()
   (cl-loop with old-point = (point)
            with retval = nil
-           initially (go-goto-opening-parenthesis)
-           while (and (not (bobp))
+           while (and (go-eldoc--goto-opening-parenthesis)
+                      (not (bobp))
                       (not (= old-point (point)))
                       (progn
                         (setq retval (go-eldoc--begining-of-funcall-p))
                         (not retval)))
            do
-           (progn
-             (setq old-point (point))
-             (go-goto-opening-parenthesis))
+           (setq old-point (point))
            finally return retval))
 
 ;; Same as 'ac-go-invoke-autocomplete'
@@ -191,8 +192,7 @@
           assignment-index)
       (if (go-in-string-or-comment-p)
           (go-goto-beginning-of-string-or-comment)
-        (when (setq assignment-index (go-eldoc--assignment-p curpoint))
-          (setq curpoint (point))))
+        (setq assignment-index (go-eldoc--assignment-p curpoint)))
       (when (go-eldoc--goto-beginning-of-funcall)
         (when (and (go-eldoc--inside-funcall-p (1- (point)) curpoint)
                    (not (go-eldoc--inside-anon-function-p (1- (point)) curpoint)))
@@ -208,7 +208,7 @@
                                  (go-eldoc--current-arg-index curpoint)))))))))))
 
 (defsubst go-eldoc--no-argument-p (arg-type)
-  (string-match "\\`\\s-+\\'" arg-type))
+  (string-match-p "\\`\\s-+\\'" arg-type))
 
 (defconst go-eldoc--argument-type-regexp
   (concat
