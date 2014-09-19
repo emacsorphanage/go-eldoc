@@ -1,5 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.18 2014/09/19 syohex
+  - Refactoring code
+
 Version 0.17 2014/06/09 syohex
   - Fix invalid highlighting case
 
