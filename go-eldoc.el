@@ -66,11 +66,10 @@
       count)))
 
 (defun go-eldoc--count-string (str from to)
-  (save-excursion
-    (goto-char from)
-    (cl-loop while (search-forward str to t)
-             unless (go-in-string-or-comment-p)
-             counting 1)))
+  (goto-char from)
+  (cl-loop while (search-forward str to t)
+           unless (go-in-string-or-comment-p)
+           counting 1))
 
 (defun go-eldoc--inside-funcall-p (from to)
   (save-excursion
@@ -192,7 +191,8 @@
           assignment-index)
       (if (go-in-string-or-comment-p)
           (go-goto-beginning-of-string-or-comment)
-        (setq assignment-index (go-eldoc--assignment-p curpoint)))
+        (when (setq assignment-index (go-eldoc--assignment-p curpoint))
+          (setq curpoint (point))))
       (when (go-eldoc--goto-beginning-of-funcall)
         (when (and (go-eldoc--inside-funcall-p (1- (point)) curpoint)
                    (not (go-eldoc--inside-anon-function-p (1- (point)) curpoint)))
