@@ -1,5 +1,9 @@
 Revision history for go-eldoc.el
 
+Version 0.19 2014/09/22 syohex
+  - Fix regression issue(Thanks fbergroth)
+  - Remove needless code
+
 Version 0.18 2014/09/19 syohex
   - Refactoring code
 
