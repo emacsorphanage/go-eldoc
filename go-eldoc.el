@@ -66,11 +66,10 @@
       count)))
 
 (defun go-eldoc--count-string (str from to)
-  (save-excursion
-    (goto-char from)
-    (cl-loop while (search-forward str to t)
-             unless (go-in-string-or-comment-p)
-             counting 1)))
+  (goto-char from)
+  (cl-loop while (search-forward str to t)
+           unless (go-in-string-or-comment-p)
+           counting 1))
 
 (defun go-eldoc--inside-funcall-p (from to)
   (save-excursion
