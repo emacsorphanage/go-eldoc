@@ -33,14 +33,14 @@
      (font-lock-fontify-buffer)
      ,@body))
 
-(defun forward-cursor-on (pattern)
+(cl-defun forward-cursor-on (pattern &optional (count 1))
   (let ((case-fold-search nil))
-    (re-search-forward pattern)
+    (re-search-forward pattern nil nil count)
     (goto-char (match-beginning 0))))
 
-(defun backward-cursor-on (pattern)
+(cl-defun backward-cursor-on (pattern &optional (count 1))
   (let ((case-fold-search nil))
-    (re-search-backward pattern)
+    (re-search-backward pattern nil nil count)
     (goto-char (match-beginning 0))))
 
 (defun face-at-cursor-p (face)
