@@ -460,4 +460,24 @@ func main() {
           (expected "test_ms: ([]time.Duration) "))
       (should (string= got expected)))))
 
+(ert-deftest parsing-regexp-replace-all-func ()
+  "Parsing Regexp.ReplaceAllFunc(#23)"
+  (with-go-temp-buffer
+    "
+package main
+import \"regexp\"
+
+var re = regexp.MustCompile(`foo`)
+
+func main() {
+        re.ReplaceAllFunc( )
+}
+"
+    (forward-cursor-on "( )")
+    (forward-char 1)
+
+    (let ((got (go-eldoc--documentation-function))
+          (expected "ReplaceAllFunc: (src []byte, repl func([]byte) []byte) []byte"))
+      (should (string= got expected)))))
+
 ;;; function.el end here
