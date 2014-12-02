@@ -77,6 +77,9 @@
           (right-paren (go-eldoc--count-string ")" from to)))
       (> left-paren right-paren))))
 
+(defsubst go-eldoc--goto-opening-parenthesis ()
+  (ignore-errors (backward-up-list) t))
+
 (defun go-eldoc--inside-anon-function-p (from to)
   (save-excursion
     (goto-char to)
@@ -120,9 +123,6 @@
   (and (= (char-after) ?\()
        (looking-back (concat go-identifier-regexp "\\s-*"))
        (not (string= "func" (thing-at-point 'word)))))
-
-(defsubst go-eldoc--goto-opening-parenthesis ()
-  (ignore-errors (backward-up-list) t))
 
 (defun go-eldoc--goto-beginning-of-funcall ()
   (cl-loop with old-point = (point)
