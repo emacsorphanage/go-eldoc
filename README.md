@@ -1,4 +1,4 @@
-# go-eldoc.el [![Build Status](https://travis-ci.org/syohex/emacs-go-eldoc.png)](https://travis-ci.org/syohex/emacs-go-eldoc)
+# go-eldoc.el [![travis badge][travis-badge]][travis-link] [![melpa badge][melpa-badge]][melpa-link] [![melpa stable badge][melpa-stable-badge]][melpa-stable-link]
 
 ## Introduction
 
@@ -65,3 +65,10 @@ like this.
                     :underline t :foreground "green"
                     :weight 'bold)
 ```
+
+[travis-badge]: https://travis-ci.org/syohex/emacs-go-eldoc.png
+[travis-link]: https://travis-ci.org/syohex/emacs-go-eldoc
+[melpa-link]: http://melpa.org/#/go-eldoc
+[melpa-stable-link]: http://melpa.org/#/go-eldoc
+[melpa-badge]: http://melpa.org/packages/go-eldoc-badge.svg
+[melpa-stable-badge]: http://stable.melpa.org/packages/go-eldoc-badge.svg
