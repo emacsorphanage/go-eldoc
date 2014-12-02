@@ -37,8 +37,13 @@
 package main
 func foo(arg int) {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg int) "))
       (should (string= got expected)))))
@@ -50,8 +55,13 @@ func foo(arg int) {
 package main
 func foo(arg int) int {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg int) int"))
       (should (string= got expected)))))
@@ -63,8 +73,13 @@ func foo(arg int) int {
 package main
 func foo(arg int) (ret int) {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg int) (ret int)"))
       (should (string= got expected)))))
@@ -76,8 +91,13 @@ func foo(arg int) (ret int) {
 package main
 func foo(arg_name int) (ret int) {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg_name")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg_name int) (ret int)"))
       (should (string= got expected)))))
@@ -89,8 +109,13 @@ func foo(arg_name int) (ret int) {
 package main
 func foo(arg int) (int, int) {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg int) (int, int)"))
       (should (string= got expected)))))
@@ -102,8 +127,13 @@ func foo(arg int) (int, int) {
 package main
 func foo(arg1 int, arg2 int) int {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg1")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg1 int, arg2 int) int"))
       (should (string= got expected)))))
@@ -115,8 +145,13 @@ func foo(arg1 int, arg2 int) int {
 package main
 func foo(arg1 int, arg2 string) (int, string) {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg1")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg1 int, arg2 string) (int, string)"))
       (should (string= got expected)))))
@@ -128,8 +163,13 @@ func foo(arg1 int, arg2 string) (int, string) {
 package main
 func foo(arg1 int, arg2 string) (ret1 int, ret2 string) {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg1")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg1 int, arg2 string) (ret1 int, ret2 string)"))
       (should (string= got expected)))))
@@ -141,8 +181,13 @@ func foo(arg1 int, arg2 string) (ret1 int, ret2 string) {
 package main
 func foo(arg1, arg2 string) (ret1, ret2 int) {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg1")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg1, arg2 string) (ret1, ret2 int)"))
       (should (string= got expected)))))
@@ -158,8 +203,13 @@ func foo(
      arg3 string
 ) float {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg2")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg1 int, arg2 bool, arg3 string) float"))
       (should (string= got expected)))))
@@ -171,8 +221,13 @@ func foo(
 package main
 func foo(ch <-chan string) int {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "ch")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (ch <-chan string) int"))
       (should (string= got expected)))))
@@ -184,8 +239,13 @@ func foo(ch <-chan string) int {
 package main
 func foo(ch <-chan string) chan<- bool {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "ch")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (ch <-chan string) (chan<- bool)"))
       (should (string= got expected)))))
@@ -197,8 +257,13 @@ func foo(ch <-chan string) chan<- bool {
 package main
 func foo(arg []int) int {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg []int) int"))
       (should (string= got expected)))))
@@ -210,8 +275,13 @@ func foo(arg []int) int {
 package main
 func foo(arg int) []int {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg int) []int"))
       (should (string= got expected)))))
@@ -223,8 +293,13 @@ func foo(arg int) []int {
 package main
 func foo(arg interface{}) int {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg interface{}) int"))
       (should (string= got expected)))))
@@ -236,8 +311,13 @@ func foo(arg interface{}) int {
 package main
 func foo(arg int) interface{} {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg int) interface{}"))
       (should (string= got expected)))))
@@ -249,8 +329,13 @@ func foo(arg int) interface{} {
 package main
 func foo(arg int) interface{} {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg int) interface{}"))
       (should (string= got expected)))))
@@ -262,8 +347,13 @@ func foo(arg int) interface{} {
 package main
 func foo(ch [2]string) int {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "ch")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (ch [2]string) int"))
       (should (string= got expected)))))
@@ -275,8 +365,13 @@ func foo(ch [2]string) int {
 package main
 func foo(arg [999]interface{}) int {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg [999]interface{}) int"))
       (should (string= got expected)))))
@@ -288,8 +383,13 @@ func foo(arg [999]interface{}) int {
 package main
 func foo(ch []string) int {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "ch")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (ch []string) int"))
       (should (string= got expected)))))
@@ -301,8 +401,13 @@ func foo(ch []string) int {
 package main
 func foo(arg []interface{}) int {
 }
+
+func main() {
+        foo( )
+}
 "
-    (forward-cursor-on "arg")
+    (forward-cursor-on "( )")
+    (forward-char 1)
     (let ((got (go-eldoc--documentation-function))
           (expected "foo: (arg []interface{}) int"))
       (should (string= got expected)))))
@@ -353,6 +458,45 @@ func main() {
 
     (let ((got (go-eldoc--documentation-function))
           (expected "test_ms: ([]time.Duration) "))
+      (should (string= got expected)))))
+
+(ert-deftest parsing-regexp-replace-all-func ()
+  "Parsing Regexp.ReplaceAllFunc(#23)"
+  (with-go-temp-buffer
+    "
+package main
+import \"regexp\"
+
+var re = regexp.MustCompile(`foo`)
+
+func main() {
+        re.ReplaceAllFunc( )
+}
+"
+    (forward-cursor-on "( )")
+    (forward-char 1)
+
+    (let ((got (go-eldoc--documentation-function))
+          (expected "ReplaceAllFunc: (src []byte, repl func([]byte) []byte) []byte"))
+      (should (string= got expected)))))
+
+(ert-deftest function-argument-return-channel ()
+  "function argument which returns channel"
+  (with-go-temp-buffer
+    "
+package main
+
+func foo(bar func (a int, b int) chan<- string, baz int) int {
+}
+
+func main() {
+        foo( )
+}
+"
+    (forward-cursor-on "( )")
+    (forward-char 1)
+    (let ((got (go-eldoc--documentation-function))
+          (expected "foo: (bar func(a int, b int) (chan<- string), baz int) int"))
       (should (string= got expected)))))
 
 ;;; function.el end here

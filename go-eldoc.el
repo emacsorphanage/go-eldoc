@@ -241,7 +241,7 @@
                (end (match-end 0)))
           (when (string= type "func")
             (forward-list)
-            (cond ((looking-at (concat "\\s-*" go-identifier-regexp))
+            (cond ((looking-at (concat "\\s-*" go-eldoc--argument-type-regexp))
                    (goto-char (match-end 0)))
                   ((looking-at "\\s-*(")
                    (skip-chars-forward " \t")

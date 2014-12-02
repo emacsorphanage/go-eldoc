@@ -37,9 +37,10 @@
 package main
 func foo() {
         var v string = \"hello\"
+        a := v + \" world\"
 }
 "
-    (forward-cursor-on "\\bv\\b")
+    (forward-cursor-on "\\bv\\b" 2)
     (let ((got (go-eldoc--documentation-function))
           (expected "v: string"))
       (should (string= got expected)))))
@@ -49,11 +50,14 @@ func foo() {
   (with-go-temp-buffer
     "
 package main
+
 func foo() {
         var this_is_variable float32 = 3.14
+        a := this_is_variable + 1.0
+        fmt.Println(this_is_variable)
 }
 "
-    (forward-cursor-on "this_is_variable")
+    (forward-cursor-on "this_is_variable" 2)
     (let ((got (go-eldoc--documentation-function))
           (expected "this_is_variable: float32"))
       (should (string= got expected)))))
