@@ -480,4 +480,23 @@ func main() {
           (expected "ReplaceAllFunc: (src []byte, repl func([]byte) []byte) []byte"))
       (should (string= got expected)))))
 
+(ert-deftest function-argument-return-channel ()
+  "function argument which returns channel"
+  (with-go-temp-buffer
+    "
+package main
+
+func foo(bar func (a int, b int) chan<- string, baz int) int {
+}
+
+func main() {
+        foo( )
+}
+"
+    (forward-cursor-on "( )")
+    (forward-char 1)
+    (let ((got (go-eldoc--documentation-function))
+          (expected "foo: (bar func(a int, b int) (chan<- string), baz int) int"))
+      (should (string= got expected)))))
+
 ;;; function.el end here
