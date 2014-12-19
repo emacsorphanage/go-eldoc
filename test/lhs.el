@@ -136,4 +136,26 @@ func main () {
       (should (eq (get-text-property 0 'face highlighted-part)
                   'eldoc-highlight-function-argument)))))
 
+(ert-deftest regression-test-26 ()
+  "Regression test of #26. Show eldoc of left hand side variable
+without any exceptions."
+  (with-go-temp-buffer
+    "
+package main
+
+type Profile map[string]string
+type Requires Profile
+
+func Get(name string, requires Requires) (*Profile, error) {
+}
+
+func main () {
+     res, err := Get(\"foo\", Requires{
+     })
+}
+"
+    (goto-char (point-min))
+    (forward-cursor-on "\\bres\\b")
+    (should (go-eldoc--documentation-function))))
+
 ;;; lhs.el end here
