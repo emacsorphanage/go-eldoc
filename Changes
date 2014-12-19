@@ -1,5 +1,9 @@
 Revision history for go-eldoc.el
 
+Version 0.21 2014/12/19 syohex
+  - Fix error when highlights return value of function
+    which has map type arguments(#26)
+
 Version 0.20 2014/12/02 syohex
   - Fix highlighting function parameter issue
   - Fix byte-compile issue
