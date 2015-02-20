@@ -66,7 +66,7 @@ like this.
                     :weight 'bold)
 ```
 
-[travis-badge]: https://travis-ci.org/syohex/emacs-go-eldoc.png
+[travis-badge]: https://travis-ci.org/syohex/emacs-go-eldoc.svg
 [travis-link]: https://travis-ci.org/syohex/emacs-go-eldoc
 [melpa-link]: http://melpa.org/#/go-eldoc
 [melpa-stable-link]: http://melpa.org/#/go-eldoc
