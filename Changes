@@ -1,5 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.22 2015/02/23 syohex
+  - Update minimum go-mode version
+
 Version 0.21 2014/12/19 syohex
   - Fix error when highlights return value of function
     which has map type arguments(#26)
