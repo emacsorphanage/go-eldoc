@@ -1,6 +1,6 @@
-;;; test-helper.el --- helper for testing go-mode
+;;; test-helper.el --- helper for testing go-eldoc
 
-;; Copyright (C) 2013 by Syohei YOSHIDA
+;; Copyright (C) 2015 by Syohei YOSHIDA
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 
