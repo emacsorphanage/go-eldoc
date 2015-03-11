@@ -69,6 +69,6 @@ like this.
 [travis-badge]: https://travis-ci.org/syohex/emacs-go-eldoc.svg
 [travis-link]: https://travis-ci.org/syohex/emacs-go-eldoc
 [melpa-link]: http://melpa.org/#/go-eldoc
-[melpa-stable-link]: http://melpa.org/#/go-eldoc
+[melpa-stable-link]: http://stable.melpa.org/#/go-eldoc
 [melpa-badge]: http://melpa.org/packages/go-eldoc-badge.svg
 [melpa-stable-badge]: http://stable.melpa.org/packages/go-eldoc-badge.svg
