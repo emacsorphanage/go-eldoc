@@ -136,6 +136,34 @@ func main () {
       (should (eq (get-text-property 0 'face highlighted-part)
                   'eldoc-highlight-function-argument)))))
 
+(ert-deftest return-function-type-with-no-name ()
+  "function returns function type which has no name"
+  (with-go-temp-buffer
+    "
+package main
+
+import \"net/http\"
+import \"error\"
+
+func FollowRedirectsCallback(howmany int) func(r *http.Request, via []*http.Request) error {
+}
+
+func main() {
+        fun := FollowRedirectsCallback(10)
+}
+"
+    (forward-cursor-on "main" 2)
+    (forward-cursor-on "fun")
+    (let ((got (go-eldoc--documentation-function)))
+      (should (eq (get-text-property 0 'face (substring got -20))
+                  'eldoc-highlight-function-argument))
+
+      (should (eq (get-text-property 0 'face (substring got -10))
+                  'eldoc-highlight-function-argument))
+
+      (should (eq (get-text-property 0 'face (substring got -5))
+                  'eldoc-highlight-function-argument)))))
+
 (ert-deftest regression-test-26 ()
   "Regression test of #26. Show eldoc of left hand side variable
 without any exceptions."
