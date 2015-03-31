@@ -244,7 +244,7 @@
                               (concat name " " type)
                             name))
                (end (match-end 0)))
-          (when (string= type "func")
+          (when (or (string= type "func") (and (not type) (string= name "func")))
             (forward-list)
             (cond ((looking-at (concat "\\s-*" go-eldoc--argument-type-regexp))
                    (goto-char (match-end 0)))
