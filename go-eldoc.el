@@ -159,22 +159,27 @@
                when (= c ?,)
                sum 1)))
 
+(defsubst go-eldoc--has-paren-same-line-p ()
+  (save-excursion
+    (re-search-forward "[({\\[]" (line-end-position) t)))
+
 (defun go-eldoc--goto-statement-end ()
   (if (re-search-forward ")\\s-*;" (line-end-position) t)
       (goto-char (match-beginning 0))
-    (if (ignore-errors (down-list) t)
-        (progn
-          (go-eldoc--goto-opening-parenthesis)
-          (forward-list)
-          (goto-char (1- (point))))
-      (let ((curindent (current-indentation)))
-        (forward-line 1)
-        (cl-loop while (< curindent (current-indentation))
-                 do (forward-line 1))
-        (forward-line -1)
-        (goto-char (line-end-position))
-        (when (looking-back ")\\s-*")
-          (goto-char (match-beginning 0)))))))
+    (when (go-eldoc--has-paren-same-line-p)
+      (if (ignore-errors (down-list) t)
+          (progn
+            (go-eldoc--goto-opening-parenthesis)
+            (forward-list)
+            (goto-char (1- (point))))
+        (let ((curindent (current-indentation)))
+          (forward-line 1)
+          (cl-loop while (< curindent (current-indentation))
+                   do (forward-line 1))
+          (forward-line -1)
+          (goto-char (line-end-position))
+          (when (looking-back ")\\s-*")
+            (goto-char (match-beginning 0))))))))
 
 (defun go-eldoc--lhs-p (curpoint)
   (save-excursion
