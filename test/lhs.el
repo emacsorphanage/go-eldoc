@@ -164,6 +164,33 @@ func main() {
       (should (eq (get-text-property 0 'face (substring got -5))
                   'eldoc-highlight-function-argument)))))
 
+(ert-deftest dont-show-next-statement ()
+  "go-eldoc must not show another statement information."
+  (with-go-temp-buffer
+    "
+package main
+
+import \"fmt\"
+
+func Foo(a int) {
+	fmt.Println(a)
+}
+
+type Bar struct {
+	aaa int
+}
+
+func main() {
+	bb := Bar{cc: 10}
+	aa := bb.cc
+	Foo(aa)
+}
+"
+    (forward-cursor-on "main" 2)
+    (forward-cursor-on "aa")
+    (let ((got (go-eldoc--documentation-function)))
+      (should-not got))))
+
 (ert-deftest regression-test-26 ()
   "Regression test of #26. Show eldoc of left hand side variable
 without any exceptions."
