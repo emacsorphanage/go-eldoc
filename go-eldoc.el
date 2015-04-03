@@ -167,19 +167,10 @@
   (if (re-search-forward ")\\s-*;" (line-end-position) t)
       (goto-char (match-beginning 0))
     (when (go-eldoc--has-paren-same-line-p)
-      (if (ignore-errors (down-list) t)
-          (progn
-            (go-eldoc--goto-opening-parenthesis)
-            (forward-list)
-            (goto-char (1- (point))))
-        (let ((curindent (current-indentation)))
-          (forward-line 1)
-          (cl-loop while (< curindent (current-indentation))
-                   do (forward-line 1))
-          (forward-line -1)
-          (goto-char (line-end-position))
-          (when (looking-back ")\\s-*")
-            (goto-char (match-beginning 0))))))))
+      (when (ignore-errors (down-list) t)
+        (go-eldoc--goto-opening-parenthesis)
+        (forward-list)
+        (goto-char (1- (point)))))))
 
 (defun go-eldoc--lhs-p (curpoint)
   (save-excursion
