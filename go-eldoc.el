@@ -166,11 +166,11 @@
 (defun go-eldoc--goto-statement-end ()
   (if (re-search-forward ")\\s-*;" (line-end-position) t)
       (goto-char (match-beginning 0))
-    (when (go-eldoc--has-paren-same-line-p)
-      (when (ignore-errors (down-list) t)
-        (go-eldoc--goto-opening-parenthesis)
-        (forward-list)
-        (goto-char (1- (point)))))))
+    (when (and (go-eldoc--has-paren-same-line-p)
+               (ignore-errors (down-list) t))
+      (go-eldoc--goto-opening-parenthesis)
+      (forward-list)
+      (goto-char (1- (point))))))
 
 (defun go-eldoc--lhs-p (curpoint)
   (save-excursion
