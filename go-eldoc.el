@@ -121,7 +121,7 @@
 
 (defun go-eldoc--begining-of-funcall-p ()
   (and (= (char-after) ?\()
-       (looking-back (concat go-identifier-regexp "\\s-*"))
+       (looking-back (concat go-identifier-regexp "\\s-*") nil)
        (not (string= "func" (thing-at-point 'word)))))
 
 (defun go-eldoc--goto-beginning-of-funcall ()
@@ -356,7 +356,7 @@
 (defun go-eldoc--retrieve-concrete-name (bounds)
   (save-excursion
     (goto-char (car bounds))
-    (while (looking-back "\\.")
+    (while (looking-back "\\." (1- (point)))
       (backward-char 1)
       (skip-chars-backward "[:word:][:multibyte:]\\[\\]"))
     (buffer-substring-no-properties (point) (cdr bounds))))
