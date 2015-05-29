@@ -57,7 +57,7 @@ Call `go-eldoc-setup` function at `go-mode-hook`
 ```
 
 ## customize
-You can change face of current argument positon by `eldoc-highlight-function-argument`
+You can change face of current argument position by `eldoc-highlight-function-argument`
 like this.
 
 ```lisp
