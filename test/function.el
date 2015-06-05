@@ -499,4 +499,25 @@ func main() {
           (expected "foo: (bar func(a int, b int) (chan<- string), baz int) int"))
       (should (string= got expected)))))
 
+(ert-deftest case-sensitive-match-function ()
+  "Match only case sensitive"
+  (with-go-temp-buffer
+    "
+package main
+
+import \"os\"
+
+func main() {
+        os.MkDIR( )
+        os.Mkdir( )
+}
+"
+    (forward-cursor-on "( )")
+    (forward-char 1)
+    (should-not (go-eldoc--documentation-function))
+
+    (forward-cursor-on "( )")
+    (forward-char 1)
+    (should (go-eldoc--documentation-function))))
+
 ;;; function.el end here
