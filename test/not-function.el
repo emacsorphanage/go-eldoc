@@ -193,4 +193,23 @@ func foo() {
           (expected "fmt: package"))
       (should (string= got expected)))))
 
+(ert-deftest case-sensitive-match-type ()
+  "Match only case sensitive"
+  (with-go-temp-buffer
+    "
+package main
+
+import \"os\"
+
+func main() {
+        os.MkDIR( )
+        os.Mkdir( )
+}
+"
+    (forward-cursor-on "MkDIR")
+    (should-not (go-eldoc--documentation-function))
+
+    (forward-cursor-on "Mkdir")
+    (should (go-eldoc--documentation-function))))
+
 ;;; not-function.el end here
