@@ -115,7 +115,8 @@
     (let* ((cands (if (string= candidates "")
                       (go-eldoc--search-builtin-functions cur-symbol curpoint)
                     candidates))
-           (regexp (format "^\\(%s,,\\(?:func\\|type\\).+\\)$" cur-symbol)))
+           (regexp (format "^\\(%s,,\\(?:func\\|type\\).+\\)$" cur-symbol))
+           (case-fold-search nil))
       (when (and cands (string-match regexp cands))
         (match-string-no-properties 1 cands)))))
 
@@ -337,14 +338,15 @@
                  (plist-get signature :real-type)))))))
 
 (defun go-eldoc--retrieve-type (typeinfo symbol)
-  (cond ((string-match (format "^%s,,var \\(.+\\)$" symbol) typeinfo)
-         (match-string 1 typeinfo))
-        ((string-match-p (format "\\`%s,,package\\s-*$" symbol) typeinfo)
-         "package")
-        ((string-match (format "^%s,,\\(func.+\\)$" symbol) typeinfo)
-         (match-string 1 typeinfo))
-        ((string-match (format "^%s,,\\(.+\\)$" symbol) typeinfo)
-         (match-string 1 typeinfo))))
+  (let ((case-fold-search nil))
+    (cond ((string-match (format "^%s,,var \\(.+\\)$" symbol) typeinfo)
+           (match-string 1 typeinfo))
+          ((string-match-p (format "\\`%s,,package\\s-*$" symbol) typeinfo)
+           "package")
+          ((string-match (format "^%s,,\\(func.+\\)$" symbol) typeinfo)
+           (match-string 1 typeinfo))
+          ((string-match (format "^%s,,\\(.+\\)$" symbol) typeinfo)
+           (match-string 1 typeinfo)))))
 
 (defun go-eldoc--get-cursor-info (bounds)
   (save-excursion
