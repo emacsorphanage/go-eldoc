@@ -1,5 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.24 2015/06/06 syohex
+  - Fix case insensitive match issue(#32)
+
 Version 0.23 2015/03/31 syohex
   - Fix incorrect highlight issue(#29)
     go-eldoc.el highlighted incorrectly on left hand side, where function returns
