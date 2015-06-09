@@ -213,4 +213,24 @@ func main () {
     (forward-cursor-on "\\bres\\b")
     (should (go-eldoc--documentation-function))))
 
+(ert-deftest assign-operator-in-comment-or-string ()
+  "Ignore assignment operator in comment or string"
+  (with-go-temp-buffer
+    "
+package main
+
+import \"math/big\"
+
+func main() {
+        a := big.NewInt()
+        var base int64 = 2
+        exponent := 1
+
+        a.Exp(base, big.NewInt(int64(exponent)), nil) //16^1 = 16
+}
+"
+    (forward-cursor-on "base,")
+    (let ((got (go-eldoc--documentation-function)))
+      (should (string-match-p "Exp" got)))))
+
 ;;; lhs.el end here
