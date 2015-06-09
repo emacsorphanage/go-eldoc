@@ -179,7 +179,8 @@
       (when (search-forward ";" limit t)
         (setq limit (1- (point))))
       (goto-char curpoint)
-      (re-search-forward ":?=" limit t))))
+      (and (re-search-forward ":?=" limit t)
+           (not (go-in-string-or-comment-p))))))
 
 (defun go-eldoc--assignment-p (curpoint)
   (when (and (not (looking-at-p "\\s-+")) (go-eldoc--lhs-p curpoint))
