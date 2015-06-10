@@ -1,5 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.25 2015/06/10 syohex
+  - Fix showing wrong function information if assignment operator in comment(#33)
+
 Version 0.24 2015/06/06 syohex
   - Fix case insensitive match issue(#32)
 
