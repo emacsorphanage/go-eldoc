@@ -233,4 +233,34 @@ func main() {
     (let ((got (go-eldoc--documentation-function)))
       (should (string-match-p "Exp" got)))))
 
+(ert-deftest method-chanining ()
+  "Method chaining"
+  (with-go-temp-buffer
+    "
+package main
+
+type Foo struct {
+}
+
+func (f *Foo) f1() *Foo {
+	return f
+}
+
+func (f *Foo) f2(a int) (*Foo, int) {
+	return f, 10+a
+}
+
+func f3() int {
+        return 3
+}
+
+func main() {
+	f := &Foo{}
+	a, b := f.f1().f2(f3())
+}
+"
+    (forward-cursor-on "a,")
+    (let ((got (go-eldoc--documentation-function)))
+      (should (string= "f2: (a int) (*Foo, int)" got)))))
+
 ;;; lhs.el end here
