@@ -164,14 +164,24 @@
   (save-excursion
     (re-search-forward "[({\\[]" (line-end-position) t)))
 
+(defun go-eldoc--goto-last-funcall (limit)
+  (let ((level (car (syntax-ppss)))
+        pos)
+    (while (re-search-forward "[[:word:][:multibyte:]]\\s-*+(" limit t)
+      (when (= level (1- (car (syntax-ppss))))
+        (setq pos (point))))
+    (when pos
+      (goto-char pos))))
+
 (defun go-eldoc--goto-statement-end ()
-  (if (re-search-forward ")\\s-*;" (line-end-position) t)
-      (goto-char (match-beginning 0))
-    (when (and (go-eldoc--has-paren-same-line-p)
-               (ignore-errors (down-list) t))
-      (go-eldoc--goto-opening-parenthesis)
-      (forward-list)
-      (goto-char (1- (point))))))
+  (let ((limit (line-end-position)))
+    (if (re-search-forward ")\\s-*;" limit t)
+        (goto-char (match-beginning 0))
+      (when (and (go-eldoc--has-paren-same-line-p)
+                 (go-eldoc--goto-last-funcall limit))
+        (go-eldoc--goto-opening-parenthesis)
+        (forward-list)
+        (goto-char (1- (point)))))))
 
 (defun go-eldoc--lhs-p (curpoint)
   (save-excursion
