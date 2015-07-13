@@ -86,7 +86,8 @@
     (goto-char to)
     (when (go-eldoc--goto-opening-parenthesis)
       (when (char-equal (char-after) ?\{)
-        (let ((func-start (point)))
+        (let ((func-start (point))
+              (case-fold-search nil))
           (goto-char from)
           (re-search-forward "\\<func\\s-*(" func-start t))))))
 
