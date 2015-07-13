@@ -78,14 +78,16 @@
       (> left-paren right-paren))))
 
 (defsubst go-eldoc--goto-opening-parenthesis ()
-  (ignore-errors (backward-up-list) t))
+  (and (ignore-errors (backward-up-list) t)
+       (eql (char-after) ?\()))
 
 (defun go-eldoc--inside-anon-function-p (from to)
   (save-excursion
     (goto-char to)
     (when (go-eldoc--goto-opening-parenthesis)
       (when (char-equal (char-after) ?\{)
-        (let ((func-start (point)))
+        (let ((func-start (point))
+              (case-fold-search nil))
           (goto-char from)
           (re-search-forward "\\<func\\s-*(" func-start t))))))
 

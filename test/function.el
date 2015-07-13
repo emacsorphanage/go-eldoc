@@ -520,4 +520,26 @@ func main() {
     (forward-char 1)
     (should (go-eldoc--documentation-function))))
 
+(ert-deftest array-index-issue ()
+  "Bug in array bracket"
+  (with-go-temp-buffer
+    "
+package main
+
+import \"net/http\"
+
+const USERS = []string{
+        \"foo\"
+}
+
+func main() {
+        http.HandleFunc(\"/\", func(w http.ResponseWriter, r *http.Request) {
+		user := USERS[i]
+	})
+}
+"
+    (forward-cursor-on "\\[i\\]")
+    (forward-char 1)
+    (should-not (go-eldoc--documentation-function))))
+
 ;;; function.el end here
