@@ -78,7 +78,8 @@
       (> left-paren right-paren))))
 
 (defsubst go-eldoc--goto-opening-parenthesis ()
-  (ignore-errors (backward-up-list) t))
+  (and (ignore-errors (backward-up-list) t)
+       (eql (char-after) ?\()))
 
 (defun go-eldoc--inside-anon-function-p (from to)
   (save-excursion
