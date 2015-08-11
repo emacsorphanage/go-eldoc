@@ -24,7 +24,7 @@ for variable, functions and current position of function.
 ## Dependency
 
 * [gocode](https://github.com/nsf/gocode)
-* [go-mode](https://code.google.com/p/go/)
+* [go-mode](https://github.com/dominikh/go-mode.el)
 
 You can install `go-mode` with package.el from [MELPA](http://melpa.milkbox.net/).
 And you can install `gocode` by `go get` as below.
@@ -40,7 +40,7 @@ You can install `go-eldoc.el` from [MELPA](http://melpa.milkbox.net/) with packa
 
 ```lisp
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 (package-refresh-contents)
 ```

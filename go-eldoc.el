@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 
-;; To use this package, add these lines to your .emacs file:
+;; To use this package, add these lines to your init.el file:
 ;;
 ;;     (require 'go-eldoc)
 ;;     (add-hook 'go-mode-hook 'go-eldoc-setup)
@@ -149,17 +149,17 @@
 (defun go-eldoc--invoke-autocomplete ()
   (let ((temp-buffer (generate-new-buffer "*go-eldoc*")))
     (prog2
-	(call-process-region (point-min)
-			     (point-max)
+        (call-process-region (point-min)
+                             (point-max)
                              go-eldoc-gocode
-			     nil
-			     temp-buffer
-			     nil
-			     "-f=emacs"
-			     "autocomplete"
-			     (or (buffer-file-name) "")
-			     (concat "c" (int-to-string (- (point) 1))))
-	(with-current-buffer temp-buffer (buffer-string))
+                             nil
+                             temp-buffer
+                             nil
+                             "-f=emacs"
+                             "autocomplete"
+                             (or (buffer-file-name) "")
+                             (concat "c" (int-to-string (- (point) 1))))
+        (with-current-buffer temp-buffer (buffer-string))
       (kill-buffer temp-buffer))))
 
 (defsubst go-eldoc--assignment-index (lhs)
