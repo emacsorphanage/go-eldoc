@@ -40,7 +40,7 @@ You can install `go-eldoc.el` from [MELPA](http://melpa.milkbox.net/) with packa
 
 ```lisp
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 (package-refresh-contents)
 ```
