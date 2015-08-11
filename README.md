@@ -56,7 +56,7 @@ Call `go-eldoc-setup` function at `go-mode-hook`
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 ```
 
-## customize
+## Customize
 You can change face of current argument position by `eldoc-highlight-function-argument`
 like this.
 
@@ -65,6 +65,11 @@ like this.
                     :underline t :foreground "green"
                     :weight 'bold)
 ```
+
+#### `go-eldoc-gocode`(Default: `gocode`)
+
+`gocode` location. You need not to set this variable if you set (`$GOPATH/bin`) to PATH environment variable correctly.
+
 
 [travis-badge]: https://travis-ci.org/syohex/emacs-go-eldoc.svg
 [travis-link]: https://travis-ci.org/syohex/emacs-go-eldoc
