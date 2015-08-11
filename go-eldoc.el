@@ -41,6 +41,11 @@
   :group 'go
   :prefix "go-eldoc-")
 
+(defcustom go-eldoc-gocode "gocode"
+  "gocode path"
+  :type 'string
+  :group 'go-eldoc)
+
 (defvar go-eldoc--builtins
   '(("append"  . "append,,func(slice []Type, elems ...Type) []Type")
     ("close"   . "close,,func(c chan<- Type)")
@@ -146,7 +151,7 @@
     (prog2
 	(call-process-region (point-min)
 			     (point-max)
-			     "gocode"
+                             go-eldoc-gocode
 			     nil
 			     temp-buffer
 			     nil
