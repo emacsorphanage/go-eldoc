@@ -1,5 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.26 2015/08/22 syohex
+  - Fix error case that  funcall in brackets(#39)
+
 Version 0.25 2015/06/10 syohex
   - Fix showing wrong function information if assignment operator in comment(#33)
 
