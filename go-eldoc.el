@@ -174,9 +174,10 @@
 (defun go-eldoc--goto-last-funcall (limit)
   (let ((level (car (syntax-ppss)))
         pos)
-    (while (re-search-forward "[[:word:][:multibyte:]]\\s-*+(" limit t)
-      (when (= level (1- (car (syntax-ppss))))
-        (setq pos (point))))
+    (save-excursion
+      (while (re-search-forward "[[:word:][:multibyte:]]\\s-*+(" limit t)
+        (when (= level (1- (car (syntax-ppss))))
+          (setq pos (point)))))
     (when pos
       (goto-char pos))))
 

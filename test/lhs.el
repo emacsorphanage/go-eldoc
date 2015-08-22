@@ -263,4 +263,23 @@ func main() {
     (let ((got (go-eldoc--documentation-function)))
       (should (string= "f2: (a int) (*Foo, int)" got)))))
 
+(ert-deftest funcall-in-backets ()
+  "funcall in brackets"
+  (with-go-temp-buffer
+    "
+package main
+
+func f1() int {
+        return 3
+}
+
+func main() {
+        var a[10]
+        b := a[f1()]
+}
+"
+    (forward-cursor-on "b")
+    ;; should not error
+    (should (progn (go-eldoc--documentation-function) t))))
+
 ;;; lhs.el end here
