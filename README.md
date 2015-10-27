@@ -26,7 +26,7 @@ for variable, functions and current position of function.
 * [gocode](https://github.com/nsf/gocode)
 * [go-mode](https://github.com/dominikh/go-mode.el)
 
-You can install `go-mode` with package.el from [MELPA](http://melpa.milkbox.net/).
+You can install `go-mode` with package.el from [MELPA](https://melpa.org/).
 And you can install `gocode` by `go get` as below.
 
 ```
@@ -36,11 +36,11 @@ And you can install `gocode` by `go get` as below.
 
 ## Installation
 
-You can install `go-eldoc.el` from [MELPA](http://melpa.milkbox.net/) with package.el.
+You can install `go-eldoc.el` from [MELPA](https://melpa.org/) with package.el.
 
 ```lisp
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 (package-refresh-contents)
 ```
@@ -73,7 +73,7 @@ like this.
 
 [travis-badge]: https://travis-ci.org/syohex/emacs-go-eldoc.svg
 [travis-link]: https://travis-ci.org/syohex/emacs-go-eldoc
-[melpa-link]: http://melpa.org/#/go-eldoc
-[melpa-stable-link]: http://stable.melpa.org/#/go-eldoc
-[melpa-badge]: http://melpa.org/packages/go-eldoc-badge.svg
-[melpa-stable-badge]: http://stable.melpa.org/packages/go-eldoc-badge.svg
+[melpa-link]: https://melpa.org/#/go-eldoc
+[melpa-stable-link]: https://stable.melpa.org/#/go-eldoc
+[melpa-badge]: https://melpa.org/packages/go-eldoc-badge.svg
+[melpa-stable-badge]: https://stable.melpa.org/packages/go-eldoc-badge.svg
