@@ -409,6 +409,7 @@
 
 ;;;###autoload
 (defun go-eldoc-setup ()
+  "Set up eldoc function and enable eldoc-mode."
   (interactive)
   (set (make-local-variable 'eldoc-documentation-function)
        'go-eldoc--documentation-function)
