@@ -3,7 +3,7 @@
 ## Introduction
 
 `go-eldoc.el` provides eldoc for Go language. `go-eldoc.el` shows type information
-for variable, functions and current position of function.
+for variable, functions and current argument position of function.
 
 
 ## Screenshot
