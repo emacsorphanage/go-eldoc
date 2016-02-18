@@ -1,6 +1,6 @@
 ;;; function.el --- Test for function signature of go-mode.el
 
-;; Copyright (C) 2015 by Syohei YOSHIDA
+;; Copyright (C) 2016 by Syohei YOSHIDA
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 
