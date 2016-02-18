@@ -1,6 +1,6 @@
 ;;; go-eldoc.el --- eldoc for go-mode -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2015 by Syohei YOSHIDA
+;; Copyright (C) 2016 by Syohei YOSHIDA
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-go-eldoc
@@ -21,6 +21,9 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+
+;; `go-eldoc.el' provides eldoc for Go language. `go-eldoc.el' shows type information
+;; for variable, functions and current argument position of function.
 
 ;; To use this package, add these lines to your init.el file:
 ;;
@@ -43,8 +46,7 @@
 
 (defcustom go-eldoc-gocode "gocode"
   "gocode path"
-  :type 'string
-  :group 'go-eldoc)
+  :type 'string)
 
 (defvar go-eldoc--builtins
   '(("append"  . "append,,func(slice []Type, elems ...Type) []Type")

@@ -1,6 +1,6 @@
 ;;; not-function.el --- Test for not function type, variable, package, etc
 
-;; Copyright (C) 2015 by Syohei YOSHIDA
+;; Copyright (C) 2016 by Syohei YOSHIDA
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 

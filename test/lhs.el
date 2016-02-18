@@ -1,6 +1,6 @@
 ;;; lhs.el --- Test for left hand side highlighting
 
-;; Copyright (C) 2015 by Syohei YOSHIDA
+;; Copyright (C) 2016 by Syohei YOSHIDA
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 
