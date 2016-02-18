@@ -43,8 +43,7 @@
 
 (defcustom go-eldoc-gocode "gocode"
   "gocode path"
-  :type 'string
-  :group 'go-eldoc)
+  :type 'string)
 
 (defvar go-eldoc--builtins
   '(("append"  . "append,,func(slice []Type, elems ...Type) []Type")
