@@ -266,7 +266,7 @@
             (forward-list)
             (cond ((looking-at (concat "\\s-*" go-eldoc--argument-type-regexp))
                    (goto-char (match-end 0)))
-                  ((looking-at "\\s-*(")
+                  ((looking-at-p "\\s-*(")
                    (skip-chars-forward " \t")
                    (forward-list)))
             (setq name-type (concat name-type
