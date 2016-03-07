@@ -14,4 +14,5 @@ before_install:
   - evm install $EVM_EMACS --use --skip
   - cask
 script:
-  make test
+  - go version
+  - make test
