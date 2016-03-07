@@ -1,5 +1,9 @@
 Revision history for go-eldoc.el
 
+Version 0.27 2016/03/07 syohex
+  - Refactoring code
+  - Update docstrings
+
 Version 0.26 2015/08/22 syohex
   - Fix error case that  funcall in brackets(#39)
 
