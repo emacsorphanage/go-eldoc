@@ -48,6 +48,10 @@
   "gocode path"
   :type 'string)
 
+(defcustom go-eldoc-gocode-args nil
+  "Additional arguments to pass to `gocode'"
+  :type '(repeat string))
+
 (defvar go-eldoc--builtins
   '(("append"  . "append,,func(slice []Type, elems ...Type) []Type")
     ("close"   . "close,,func(c chan<- Type)")
@@ -147,20 +151,23 @@
            (setq old-point (point))
            finally return retval))
 
-;; Same as 'ac-go-invoke-autocomplete'
+;; Same as 'company-go--invoke-autocomplete'
 (defun go-eldoc--invoke-autocomplete ()
-  (let ((temp-buffer (generate-new-buffer "*go-eldoc*")))
+  (let ((temp-buffer (generate-new-buffer "*go-eldoc*"))
+        (gocode-args (append go-eldoc-gocode-args
+                             (list "-f=emacs"
+                                   "autocomplete"
+                                   (or (buffer-file-name) "")
+                                   (concat "c" (int-to-string (- (point) 1)))))))
     (prog2
-        (call-process-region (point-min)
-                             (point-max)
-                             go-eldoc-gocode
-                             nil
-                             temp-buffer
-                             nil
-                             "-f=emacs"
-                             "autocomplete"
-                             (or (buffer-file-name) "")
-                             (concat "c" (int-to-string (- (point) 1))))
+        (apply #'call-process-region
+               (point-min)
+               (point-max)
+               go-eldoc-gocode
+               nil
+               temp-buffer
+               nil
+               gocode-args)
         (with-current-buffer temp-buffer (buffer-string))
       (kill-buffer temp-buffer))))
 
