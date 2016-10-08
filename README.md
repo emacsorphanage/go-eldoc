@@ -10,15 +10,15 @@ for variable, functions and current argument position of function.
 
 ### Argument Type of Function
 
-![go-eldoc1](image/go-eldoc1.png)
+![Screenshot of showing argument type of function](image/go-eldoc1.png)
 
 ### Variable Type Information
 
-![go-eldoc2](image/go-eldoc2.png)
+![Screenshot of showing variable type information](image/go-eldoc2.png)
 
 ### Return Value Type
 
-![go-eldoc3](image/go-eldoc3.png)
+![Screenshot of showing return value type](image/go-eldoc3.png)
 
 
 ## Dependency
