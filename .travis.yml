@@ -1,12 +1,12 @@
 sudo: false
 language: go
 go:
-  - "1.6"
+  - "1.7"
   - "tip"
 env:
-  - EVM_EMACS=emacs-24.3-travis
   - EVM_EMACS=emacs-24.4-travis
   - EVM_EMACS=emacs-24.5-travis
+  - EVM_EMACS=emacs-25.1-travis
 before_install:
   - go get github.com/nsf/gocode
   - export PATH=$HOME/gopath/bin:$PATH
