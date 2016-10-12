@@ -66,10 +66,13 @@ like this.
                     :weight 'bold)
 ```
 
-#### `go-eldoc-gocode`(Default: `gocode`)
+##### `go-eldoc-gocode`(Default: `gocode`)
 
 `gocode` location. You need not to set this variable if you set (`$GOPATH/bin`) to PATH environment variable correctly.
 
+##### `go-eldoc-gocode-args`(Default: `nil`)
+
+Arguments of `gocode` command. Type of this variable is list of strings.
 
 [travis-badge]: https://travis-ci.org/syohex/emacs-go-eldoc.svg
 [travis-link]: https://travis-ci.org/syohex/emacs-go-eldoc
