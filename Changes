@@ -1,5 +1,8 @@
 Revision history for go-eldoc.el
 
+Version 0.30 2017/02/12 syohex
+  - Drop older Emacs support for maintenance
+
 Version 0.28 2016/10/12 syohex
   - Add customize variable of gocode argument(Thanks Konstantin Shaposhnikov)
 
