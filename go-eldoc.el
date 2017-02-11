@@ -5,7 +5,7 @@
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-go-eldoc
 ;; Version: 0.28
-;; Package-Requires: ((go-mode "1.0.0") (cl-lib "0.5"))
+;; Package-Requires: ((emacs "24.3") (go-mode "1.0.0"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -419,8 +419,7 @@
 (defun go-eldoc-setup ()
   "Set up eldoc function and enable eldoc-mode."
   (interactive)
-  (set (make-local-variable 'eldoc-documentation-function)
-       'go-eldoc--documentation-function)
+  (setq-local eldoc-documentation-function #'go-eldoc--documentation-function)
   (eldoc-mode +1))
 
 (provide 'go-eldoc)
