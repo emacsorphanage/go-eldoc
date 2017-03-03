@@ -1,4 +1,9 @@
-.PHONY : test test-function
+UNAME_S=$(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	EMACS ?= /Applications/Emacs.app/Contents/MacOS/Emacs
+else
+	EMACS ?= emacs
+endif
 
 EMACS ?= emacs
 CASK ?= cask
