@@ -23,14 +23,14 @@ for variable, functions and current argument position of function.
 
 ## Dependency
 
-* [gocode](https://github.com/nsf/gocode)
+* [gocode](https://github.com/mdempsky/gocode)
 * [go-mode](https://github.com/dominikh/go-mode.el)
 
 You can install `go-mode` with package.el from [MELPA](https://melpa.org/).
 And you can install `gocode` by `go get` as below.
 
 ```
-% go get -u github.com/nsf/gocode
+% go get -u github.com/mdempsky/gocode
 ```
 
 
