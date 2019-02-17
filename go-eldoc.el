@@ -152,6 +152,9 @@
            finally return retval))
 
 (defun go-eldoc--invoke-autocomplete ()
+  (when (get-buffer "*go-eldoc*")
+    (kill-buffer "*go-eldoc*"))
+
   (let ((temp-buffer (get-buffer-create "*go-eldoc*"))
         (gocode-args (append go-eldoc-gocode-args
                              (list "-f=emacs"
